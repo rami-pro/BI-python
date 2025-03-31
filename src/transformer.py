@@ -29,25 +29,44 @@ class DataTransformer:
             "Electricity from hydro - TWh",
             "Electricity from solar - TWh",
             "Electricity from wind - TWh",
+            "Electricity from bioenergy - TWh",
             "Other renewables excluding bioenergy - TWh"
         ]
+
         # Drop rows where all energy columns are missing
         df_energy = df_energy.dropna(subset=energy_columns, how="all")
-        
-        df_energy["primary_energy"] = df_energy[energy_columns].idxmax(axis=1)
-        df_energy["energie_principale"] = np.where(
-            df_energy["primary_energy"].str.contains("coal|oil|gas"),
-            "fossil",
-            np.where(
-                df_energy["primary_energy"].str.contains("nuclear"),
-                "nuclear",
-                np.where(
-                    df_energy["primary_energy"].str.contains("hydro|solar|wind|bioenergy"),
-                    "renouvelable",
-                    "mix"
-                )
-            )
+
+        # Step 1: Group energies by category
+        df_energy["fossil_energy"] = (
+            df_energy["Electricity from coal - TWh"].fillna(0) +
+            df_energy["Electricity from oil - TWh"].fillna(0) +
+            df_energy["Electricity from gas - TWh"].fillna(0)
         )
+        df_energy["nuclear_energy"] = df_energy["Electricity from nuclear - TWh"].fillna(0)
+        df_energy["renewable_energy"] = (
+            df_energy["Electricity from hydro - TWh"].fillna(0) +
+            df_energy["Electricity from solar - TWh"].fillna(0) +
+            df_energy["Electricity from wind - TWh"].fillna(0) +
+            df_energy["Electricity from bioenergy - TWh"].fillna(0) +
+            df_energy["Other renewables excluding bioenergy - TWh"].fillna(0)
+        )
+
+        # Step 2: Calculate total energy production
+        df_energy["total_energy"] = df_energy[energy_columns].sum(axis=1)
+
+        # Step 3: Determine the dominant energy category
+        df_energy["energie_principale"] = "mix"  # Default value
+        df_energy["energie_principale"] = df_energy.apply(
+        lambda row: (
+            "fossil" if row["total_energy"] > 0 and row["fossil_energy"] / row["total_energy"] > 0.5 else
+            "nuclear" if row["total_energy"] > 0 and row["nuclear_energy"] / row["total_energy"] > 0.5 else
+            "renouvelable" if row["total_energy"] > 0 and row["renewable_energy"] / row["total_energy"] > 0.5 else
+            "mix"
+            ),
+            axis=1
+        )
+
+        # Step 4: Return only necessary columns
         return df_energy[["Entity", "Code", "Year", "energie_principale"]]
     
     def categorize_income(self, df_gdp):

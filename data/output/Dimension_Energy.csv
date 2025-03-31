@@ -1,4 +1,5 @@
 energie_principale,ID_energie_principale
 fossil,1
 renouvelable,2
-nuclear,3
+mix,3
+nuclear,4
