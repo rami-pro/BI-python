@@ -1,8 +1,9 @@
 from src.extractor import DataExtractor
 from src.transformer import DataTransformer
-from src.loader import DataLoader
+from src.loader import DataLoader, DatabaseLoader
 from src.config import INCOME_CATEGORIES
 import pandas as pd
+import os
 
 def main():
     # Extraction
@@ -80,6 +81,19 @@ def main():
     # Chargement
     loader = DataLoader()
     loader.load_all(dimensions, df_faits)
+    
+    # Chargement dans PostgreSQL
+    db_loader = DatabaseLoader()
+    db_loader.connect()
+    db_loader.create_tables()
+
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "output")
+    for table_name in ["dimension_pays", "dimension_temps", "dimension_energy", "dimension_developpement_humain", "dimension_revenus", "fait_socioeconomique"]:
+        db_loader.truncate_table(table_name)
+        file_path = os.path.join(output_dir, f"{table_name}.csv")
+        db_loader.load_csv_to_table(file_path, table_name)
+
+    db_loader.close()
 
 if __name__ == "__main__":
     main()

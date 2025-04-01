@@ -122,8 +122,8 @@ HDI_THRESHOLDS = {
 
 INCOME_CATEGORIES = {
     "riche": (20000, float("inf")),
-    "moyen sup": (10000, 20000),
-    "moyen inférieur": (5000, 10000),
+    "moyen_sup": (10000, 20000),
+    "moyen_inférieur": (5000, 10000),
     "pauvres": (0, 5000),
 }
 ```

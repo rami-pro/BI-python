@@ -13,8 +13,8 @@ class DataTransformer:
         df_hdi["niveau_developpement"] = pd.cut(
             df_hdi["Human Development Index"],
             bins=[HDI_THRESHOLDS["Faible"], HDI_THRESHOLDS["Moyen"], 
-                  HDI_THRESHOLDS["Élevé"], HDI_THRESHOLDS["Très élevé"], float("inf")],
-            labels=["Faible", "Moyen", "Élevé", "Très élevé"],
+                  HDI_THRESHOLDS["Eleve"], HDI_THRESHOLDS["Tres_eleve"], float("inf")],
+            labels=["Faible", "Moyen", "Eleve", "Tres_eleve"],
             include_lowest=True
         )
         return df_hdi
