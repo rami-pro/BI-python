@@ -2,3 +2,4 @@
 .DS_Store
 /output
 /src/__pycache__
+.aider*
