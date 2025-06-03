@@ -179,7 +179,7 @@ La table `Fait_SocioEconomique` constitue le cœur du modèle étoile, offrant u
 
 #### **Modèle en étoile**
 
-![modele en étoile](https://github.com/rami-pro/BI-python/blob/main/assets/modele_etoile.png)
+![modele en étoile](./assets/modele_etoile.png)
 
 ---
 
@@ -217,7 +217,7 @@ Les principales bibliothèques utilisées sont :
 - **pandas** : manipulation et transformation des données.
 - **os / glob** : gestion des chemins et fichiers.
 - **logging** : journalisation des étapes du processus ETL.
-- **psycopg2** ou **SQLAlchemy** (selon l’implémentation) : connexion et insertion des données dans PostgreSQL.
+- **psycopg2** : connexion et insertion des données dans PostgreSQL.
 
 ### **Phases du pipeline ETL**
 
@@ -594,3 +594,193 @@ Une fois les données chargées et les relations établies, Power BI permet de c
 4. **Identification des corrélations** :
    - Graphiques à bulles ou matrices de corrélation pour analyser les relations entre les indicateurs socio-économiques.
    - Exemple : Corrélation entre le PIB par habitant et les émissions de CO₂ par habitant.
+
+## **Observations et analyses**
+
+### Répartition des Émissions par Catégorie de Revenu
+
+![emmissions par revenu](./assets/pourcentage_emissions.png)
+
+#### Observations
+
+- **Pays Riches** :
+  Les pays riches ("Riche") dominent les émissions (74.31 %). Cela sʼexplique par leur
+  consommation élevée dʼénergie, leur industrialisation avancée, et leur mode de vie intensif en
+  ressources.
+- **Pays Moyen-Revenu** :
+  Les pays à revenu "Moyen%sup" (19.12 %) et "Moyen%inferieur" (4.67 %) contribuent
+  également aux émissions, mais dans une moindre mesure. Ces pays se trouvent souvent dans
+  des phases de développement industriel où lʼutilisation dʼénergies fossiles augmente.
+- **Pays Pauvres** :
+  Les pays pauvres ("Pauvres") ont une contribution minime (1.9 %). Leur faible accès à lʼénergie
+  et leur économie moins industrialisée expliquent cette faible empreinte carbone.
+
+#### Interprétation
+
+- **Modèle de Consommation** :
+  Les pays riches ont un modèle de consommation énergétique très
+  carboné, tandis que les pays pauvres nʼont pas encore atteint un niveau de consommation suffisant pour produire des émissions significatives.
+- **Transition Énergétique** :
+  Il est crucial de soutenir les pays à revenu moyen dans leur transition vers des énergies propres avant quʼils ne suivent le même chemin que les pays riches.
+
+### Corrélation entre l'indice de développement humain et Émissions
+
+![alternate text](./assets/correlation_hdi_co2.png)
+
+#### **1. Observations**
+
+Le scatter plot montre la relation entre l’**Indice de Développement Humain (HDI)** et les **émissions de CO₂ par habitant** pour différents pays. Voici les principales observations :
+
+- **Répartition générale** :
+
+  - Les points sont dispersés sur le graphique, indiquant une variabilité dans les relations entre HDI et émissions de CO₂.
+  - Certains pays présentent des émissions élevées malgré un HDI relativement faible, tandis que d’autres ont des émissions faibles avec un HDI élevé.
+
+- **Clusters distincts** :
+
+  - À gauche du graphique (HDI bas), les émissions de CO₂ sont généralement faibles, ce qui est logique car ces pays sont souvent moins industrialisés.
+  - À droite du graphique (HDI élevé), on observe une dispersion plus large des émissions de CO₂. Certains pays très développés (HDI élevé) émettent beaucoup de CO₂, tandis que d’autres limitent leurs émissions.
+
+- **Corrélation globale** :
+
+  - Une tendance légèrement positive semble exister entre le HDI et les émissions de CO₂. Cependant, cette corrélation n’est pas linéaire ou stricte, car certains pays à HDI élevé affichent des émissions relativement basses.
+
+- **Exemples notables** :
+  - Certains pays situés en haut à droite du graphique (HDI élevé et émissions élevées) peuvent être identifiés comme des économies industrielles ou pétrolières.
+  - Des pays en bas à gauche (HDI bas et émissions basses) représentent souvent des économies en développement ou moins industrialisées.
+
+#### **Interprétations**
+
+- **Développement économique et émissions de CO₂** :
+
+  - Les pays à HDI élevé tendent à avoir des économies plus industrialisées et consomment davantage d’énergie, ce qui peut entraîner des émissions de CO₂ plus importantes. Cependant, certains pays riches investissent également dans des technologies vertes et des politiques environnementales strictes, réduisant leur empreinte carbone.
+
+- **Effets des politiques environnementales** :
+
+  - La dispersion des points à HDI élevé illustre l’impact des politiques environnementales. Certains pays riches adoptent des stratégies agressives pour réduire leurs émissions, tandis que d’autres continuent à dépendre de sources d’énergie fossiles.
+
+- **Équilibre entre prospérité et durabilité** :
+
+  - Le graphique met en lumière le défi mondial consistant à atteindre un équilibre entre le développement humain et la préservation de l’environnement. Il souligne la nécessité pour les pays à HDI élevé de réduire leurs émissions tout en maintenant leur niveau de vie.
+
+- **Rôle des ressources naturelles** :
+  - Certains pays riches en ressources énergétiques (comme le pétrole ou le gaz) peuvent avoir des émissions élevées malgré des efforts de développement durable. Cela reflète les défis liés à la transition énergétique dans ces économies.
+
+### Impact des Sources dʼénergie
+
+![alternate text](./assets/ppllution_type_energy.png)
+
+#### Observations
+
+- **Cmbustibles fossiles** :
+  Les combustibles fossiles représentent 77.56 % des émissions. Le charbon, le pétrole et le gaz
+  naturel restent les principales sources dʼénergie, malgré leurs impacts environnementaux
+  négatifs.
+- **Énergies Renouvelables** :
+  Les énergies renouvelables (13.63 %) et nucléaires (3.48 %) contribuent pour une part
+  minoritaire. Cela souligne le retard pris dans la transition énergétique mondiale.
+
+#### Interprétation
+
+- **Dépendance aux Fossiles** : La dépendance aux combustibles fossiles est un obstacle majeur à la
+  réduction des émissions.
+- **Urgence de la Transition** :
+  Investir massivement dans les énergies renouvelables et nucléaires est essentiel pour réduire les émissions tout en satisfaisant la demande énergétique mondiale.
+
+### Évolution Temporelle des émissions de carbonne
+
+![alternate text](./assets/dev_temps_em_co2.png)
+
+#### Observations
+
+- **Pays riches** :
+  Les pays riches montrent une tendance à des émissions plus volatiles, avec un pic autour de
+  2010–2015. Cela pourrait être dû à des politiques de réduction des émissions mises en place
+  après cette période.
+- **Pays pauvres** :
+  Les pays pauvres maintiennent des émissions stables et faibles, reflétant leur faible
+  consommation dʼénergie.
+
+#### Interprétation
+
+- **Efforts de Réduction** : Les pays riches semblent avoir commencé à réduire leurs émissions après 2015, probablement grâce à des politiques climatiques et des investissements dans les énergies propres.
+- **Développement futur** :
+  Les pays pauvres risquent dʼaccroître leurs émissions à mesure quʼils se développent, sauf si des solutions durables leur sont proposées dès maintenant.
+
+### **Conclusion Générale du Projet**
+
+Le projet que nous avons mené représente une chaîne complète d’intégration de données, allant de l’extraction des jeux de données bruts à leur transformation, puis à leur chargement dans un Data Warehouse relationnel. Cette approche structurée a permis de préparer les données pour une analyse décisionnelle avancée via Power BI.
+
+---
+
+#### **Synthèse des Objectifs Atteints**
+
+1. **Extraction des données brutes** :
+
+   - Nous avons réussi à extraire des données socio-économiques provenant de sources fiables (Our World in Data), incluant :
+     - L’indice de développement humain (HDI),
+     - Les émissions de CO₂ par habitant,
+     - Le PIB par habitant,
+     - Les sources d’énergie principales utilisées par chaque pays.
+   - Ces données ont été chargées sous forme de DataFrames pandas pour être manipulées plus facilement.
+
+2. **Transformation et nettoyage des données** :
+
+   - Une étape essentielle a consisté à nettoyer les valeurs manquantes, uniformiser les formats, et enrichir les jeux de données avec des catégories pertinentes :
+     - Catégorisation de l’HDI selon les seuils définis (Faible, Moyen, Élevé, Très élevé).
+     - Détermination de l’énergie principale utilisée par pays et année.
+     - Classification des revenus selon le PIB par habitant.
+     - Filtrage des émissions de CO₂ pour ne conserver que les années postérieures à 1990.
+   - À partir de ces données transformées, nous avons construit un **modèle étoile**, comprenant cinq tables de dimensions (`Dimension_Pays`, `Dimension_Temps`, `Dimension_Energy`, `Dimension_Developpement_Humain`, `Dimension_Revenus`) et une table de faits centrale (`Fait_SocioEconomique`).
+
+3. **Chargement dans PostgreSQL** :
+
+   - Les données transformées ont été sauvegardées au format CSV, puis chargées dans une base de données PostgreSQL via le script `loader.py`.
+   - La création automatique des tables et la gestion des contraintes d’intégrité garantissent la cohérence des données dans le Data Warehouse.
+
+4. **Visualisation via Power BI** :
+   - En connectant Power BI à la base PostgreSQL, nous avons pu explorer visuellement les tendances clés, notamment :
+     - La corrélation entre le niveau de développement humain et les émissions de CO₂.
+     - L’analyse comparative des stratégies énergétiques entre pays riches et pays pauvres.
+     - L’évolution temporelle des indicateurs socio-économiques.
+
+---
+
+#### **Réflexion sur les Résultats Obtenus**
+
+Les résultats obtenus montrent une forte disparité entre les pays en matière d’empreinte carbone et de développement économique :
+
+- **Pays développés** : Bien que certains affichent un haut niveau de développement humain, leurs émissions de CO₂ restent élevées, souvent liées à leur dépendance aux énergies fossiles.
+- **Pays en développement** : Malgré leurs faibles émissions, ils subissent davantage les effets du changement climatique, ce qui soulève des questions d’équité environnementale.
+
+En outre, certaines exceptions notables montrent qu’il est possible d’allier un bon niveau de développement humain à des émissions réduites, grâce à des politiques énergétiques ambitieuses ou une transition vers les énergies renouvelables.
+
+---
+
+#### **Points Forts du Projet**
+
+- **Automatisation du pipeline ETL** : Le processus est entièrement automatisé, reproductible et facilement extensible.
+- **Modélisation adaptée** : Le modèle étoile proposé permet une analyse multidimensionnelle efficace.
+- **Exploitation décisionnelle** : Grâce à Power BI, les visualisations produites offrent des insights clairs et exploitables pour les décideurs.
+
+---
+
+#### **Limites et Perspectives d’Amélioration**
+
+Malgré ses réussites, le projet présente quelques limites :
+
+- **Étendue des données** : Certaines sources sont incomplètes ou manquent de données historiques profondes.
+- **Performance du chargement** : Le chargement des fichiers CSV dans PostgreSQL peut être amélioré pour mieux gérer les volumes importants de données.
+- **Couverture géographique** : Certains pays ne sont pas représentés dans toutes les sources, ce qui limite la généralisation des analyses.
+
+Des perspectives futures pourraient inclure :
+
+- **L’automatisation totale avec Docker et Airflow** pour orchestrer les étapes ETL.
+- **L’intégration de nouvelles sources de données** pour enrichir l’analyse (données démographiques, données sur les politiques publiques, etc.).
+- **La mise en place d’un serveur Power BI Service** pour partager les dashboards avec des utilisateurs finaux.
+
+---
+
+### **Conclusion Finale**
+
+Ce projet constitue une réponse concrète à un besoin croissant d’analyser les données socio-économiques pour mieux comprendre les dynamiques mondiales actuelles. En combinant les technologies Python, PostgreSQL et Power BI, il offre une solution robuste, modulaire et évolutive. Il démontre également comment la Business Intelligence peut contribuer à éclairer les choix politiques dans un contexte de développement durable et d’équité mondiale.
