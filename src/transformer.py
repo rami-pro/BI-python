@@ -95,7 +95,8 @@ class DataTransformer:
         
         return df_co2[df_co2["Year"] >= 1990]
 
-    def create_dimensions(self, df_hdi, df_energy, df_gdp, df_co2):
+    def create_dimensions(self, df_hdi, df_energy, df_gdp):
+        print("random log here")
         """Crée les dimensions et la table de faits."""
         # Dimension Pays
         pays = df_hdi[["Entity", "Code"]].drop_duplicates()
